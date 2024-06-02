@@ -30,11 +30,21 @@ struct Vector2D {
     Vector2D() : x(0), y(0) {}                // 默认构造函数
     Vector2D(float a, float b) : x(a), y(b) {}// 有参构造函数
 
-    // 重载运算符（便于坐标计算）
+    /************* 重载运算符（便于坐标计算） *************/
+
     // 入参 const代表入参对象的成员变量不会被修改，
     // 函数末尾的 const代表调用该函数的对象的成员变量不会被修改
+    bool operator==(const Vector2D &another) const {
+        return this->x == another.x && this->y == another.y;
+    }
+
+    bool operator!=(const Vector2D &another) const {
+        return this->x != another.x || this->y != another.y;
+    }
+
     Vector2D operator+(const Vector2D &another) const {
-        // this指针指向当前对象，指针本身不是对象，访问指针成员要用 "->", 访问对象成员要用 "."
+        // this指针指向当前对象，指针本身不是对象，
+        // 访问指针成员要用 "->"，访问对象成员要用 "."，在不引起歧义的情况下，"this->"一般可省略
         return {this->x + another.x, this->y + another.y};
     }
 
@@ -42,20 +52,51 @@ struct Vector2D {
         return {this->x - another.x, this->y - another.y};
     }
 
+    // 数乘，乘以实数
+    Vector2D operator*(float scale) const {
+        return {this->x * scale, this->y * scale};
+    }
+
+    Vector2D operator/(float scale) const {
+        return {this->x / scale, this->y / scale};
+    }
+
     // 这里会修改对象内部的成员变量，所以函数末尾没有 const
-    Vector2D operator+=(const Vector2D &another) {
+    Vector2D &operator+=(const Vector2D &another) {
         this->x += another.x;
         this->y += another.y;
         return *this;
     }
 
-    Vector2D operator-=(const Vector2D &another) {
+    Vector2D &operator-=(const Vector2D &another) {
         this->x -= another.x;
         this->y -= another.y;
         return *this;
     }
 
-    // 重载 << 运算符
+    Vector2D &operator*=(float scale) {
+        this->x *= scale;
+        this->y *= scale;
+        return *this;
+    }
+
+    Vector2D &operator/=(float scale) {
+        this->x /= scale;
+        this->y /= scale;
+        return *this;
+    }
+
+    // 取反
+    Vector2D operator-() const {
+        return {-x, -y};
+    }
+
+    // 向量点乘
+    float operator*(const Vector2D &another) const {
+        return this->x * another.x + this->y * another.y;
+    }
+
+    // 重载输出流 << 运算符
     // 将 "operator<<"声明为友元函数，使其可访问类的私有成员变量
     friend ostream &operator<<(ostream &os, const Vector2D &d) {
         os << "("
@@ -63,6 +104,8 @@ struct Vector2D {
            << " y: " << d.y << ")";
         return os;// 返回一个 ostream& 对象
     }
+
+    /************* 功能函数 *************/
 
     static float Distance(const Vector2D &a, const Vector2D &b) {
         return sqrtf((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
