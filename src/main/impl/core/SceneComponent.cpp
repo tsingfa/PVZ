@@ -39,5 +39,6 @@ void SceneComponent::processDestruct() {
             child->processDestruct();
         }
     }
-    this->owner->componentsToDestruct.insert(this);// 添加到待销毁的容器集合中
+    // TODO
+    // this->owner->componentsToDestruct.insert(this);// 添加到待销毁的容器集合中
 }
