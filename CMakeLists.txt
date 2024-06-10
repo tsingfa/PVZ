@@ -12,8 +12,4 @@ file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.cxx" "src/*.cc")
 
 # 添加可执行文件
 add_executable(PVZ ${SOURCES} ${INCLUDES}
-        include/core/Transform.h
-        src/main/impl/core/Transform.cpp
-        include/core/Object.h
-        src/main/impl/core/Object.cpp
 )
