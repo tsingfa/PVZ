@@ -15,10 +15,10 @@ protected:
     std::set<SceneComponent *> children;// 存储子类组件的容器
     SceneComponent *parent = nullptr;   // 父指针
 
-    void processDestruct();// 辅助删除销毁操作
 public:
     void Update() override;
     void setAttachment(SceneComponent *);
+    void processDestruct();  // 辅助删除销毁操作
     void Destruct() override;// 删除销毁组件
 };
 

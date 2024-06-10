@@ -24,21 +24,11 @@ void SceneComponent::setAttachment(SceneComponent *newParent) {
 }
 
 /**
- * 销毁组件
+ * 销毁 SceneComponent组件（包含自己及其子组件等），即垃圾回收
  **/
 void SceneComponent::Destruct() {
-    if (this->parent != nullptr) {// 将自己从原父亲的孩子们中移除
+    if (this->parent != nullptr) {// 将自己从原父亲的 children中移除
         this->parent->children.erase(this);
     }
     this->processDestruct();// 将自己，孩子，孩子的孩子等添加到待销毁集合中
-}
-
-void SceneComponent::processDestruct() {
-    if (!this->children.empty()) {// 孩子不为空
-        for (auto &child: children) {
-            child->processDestruct();
-        }
-    }
-    // TODO
-    // this->owner->componentsToDestruct.insert(this);// 添加到待销毁的容器集合中
 }

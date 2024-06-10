@@ -11,9 +11,9 @@ void Component::setOwner(Object *oneOwner) {
     this->owner = oneOwner;
 }
 
-void Component::Destruct() {
-}
-
 Object *Component::getOwner() const {
     return this->owner;
+}
+
+void Component::SetPosition(Vector2D vector2D) {
 }
